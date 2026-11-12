@@ -18,6 +18,7 @@
   h1{margin:0;font-size:22px;letter-spacing:.2px}
   h1 span{color:var(--accent)}
   .meta{font-size:12px;opacity:.8;text-align:right;line-height:1.5}
+  .auto{font-size:11px;color:#cfe0da;opacity:.85;margin-top:8px}
   .right{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
   #btn-upd{background:var(--accent);color:#1c2321;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
   #btn-upd:hover{filter:brightness(1.07)}
@@ -84,6 +85,7 @@
       </button>
     </div>
   </div>
+  <div class="auto" id="auto">Revisión de WhatsApp (Mecánicos QB + Supervisores TMF) a pedido sobre las últimas 3 horas · el botón Actualizar carga lo último publicado</div>
   <nav>
     <button class="on" data-tab="fs">Fuera de servicio</button>
     <button data-tab="op">Equipos operativos</button>
@@ -95,12 +97,12 @@
   <!-- PESTAÑA 1: FUERA DE SERVICIO -->
   <section class="tab on" id="tab-fs">
     <div class="tiles">
-      <div class="tile red"><div class="lbl">Equipos fuera de servicio</div><div class="val" id="k-fs">0</div><div class="sub">Reportados y sin aviso de operativo</div></div>
-      <div class="tile orange"><div class="lbl">Reportados F/S últimas 12 h</div><div class="val" id="k-12">0</div><div class="sub" id="k-12s"></div></div>
+      <div class="tile red"><div class="lbl">Equipos fuera de servicio / en taller</div><div class="val" id="k-fs">0</div><div class="sub">Reportados y sin aviso de operativo</div></div>
+      <div class="tile orange"><div class="lbl">Reportados F/S o a taller · últimas 12 h</div><div class="val" id="k-12">0</div><div class="sub" id="k-12s"></div></div>
       <div class="tile"><div class="lbl">Tolvas fuera de servicio</div><div class="val" id="k-tol">0</div><div class="sub" id="k-tols"></div></div>
     </div>
     <div class="card">
-      <h2>Listado de equipos fuera de servicio</h2>
+      <h2>Listado de equipos fuera de servicio o en taller</h2>
       <div class="hint">Haz clic en un encabezado para ordenar.</div>
       <div class="tools">
         <input id="q-fs" placeholder="Buscar patente, área, falla, persona…">
@@ -187,7 +189,8 @@ function render(){
   const last12 = fs.filter(e=>NOW-new Date(e.fecha_fs) <= 12*H);
   const tolFS = fs.filter(e=>e.tolva);
   set("k-fs", fs.length);
-  set("k-12", last12.length); set("k-12s", last12.length ? last12.map(e=>e.equipo.split(" ")[0]).join(", ") : "Sin nuevos reportes");
+  const last3 = fs.filter(e=>NOW-new Date(e.fecha_fs) <= 3*H);
+  set("k-12", last12.length); set("k-12s", "Últimas 3 h: "+(last3.length ? last3.map(e=>e.equipo.split(" ")[0]).join(", ") : "sin nuevos reportes")+(last12.length ? " · 12 h: "+last12.map(e=>e.equipo.split(" ")[0]).join(", ") : ""));
   set("k-tol", tolFS.length); set("k-tols", fs.length ? Math.round(tolFS.length/fs.length*100)+"% del total F/S" : "");
 
   // ---- Tabla genérica con orden
