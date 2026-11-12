@@ -3,8 +3,8 @@
 // estado: "FS" = fuera de servicio vigente, "OP" = volvió a operativo.
 // Fechas en hora de Chile (-03:00).
 window.DATA = {
-  actualizado: "2026-11-12T15:45:00-03:00",
-  periodo: "Reportes desde 09/11/2026 00:00 hasta 12/11/2026 15:45",
+  actualizado: "2026-11-12T15:58:00-03:00",
+  periodo: "Reportes desde 09/11/2026 00:00 hasta 12/11/2026 15:58",
   equipos: [
     // ---------- FUERA DE SERVICIO VIGENTES ----------
     { equipo: "VVDP-65", tipo: "Excavadora CAT 350", tolva: false, reportado_por: "Cristian Torres", grupo: "Mecánicos QB + Supervisores TMF", horometro: "3626", area: "Coronamiento", condicion: "Código de falla de motor / inyector DPF", fecha_reporte: "2026-11-09T08:21:00-03:00", fecha_fs: "2026-11-09T08:21:00-03:00", estado: "FS", nota: "Registro de turno noche 08/11 ya lo indicaba F/S" },
