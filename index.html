@@ -18,6 +18,12 @@
   h1{margin:0;font-size:22px;letter-spacing:.2px}
   h1 span{color:var(--accent)}
   .meta{font-size:12px;opacity:.8;text-align:right;line-height:1.5}
+  .right{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+  #btn-upd{background:var(--accent);color:#1c2321;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+  #btn-upd:hover{filter:brightness(1.07)}
+  #btn-upd:disabled{opacity:.7;cursor:wait}
+  #btn-upd.spin svg{animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
   nav{display:flex;gap:4px;margin-top:16px;overflow-x:auto}
   nav button{background:transparent;border:0;color:#cfe0da;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;white-space:nowrap}
   nav button.on{background:var(--bg);color:var(--brand)}
@@ -70,7 +76,13 @@
 <header>
   <div class="top">
     <h1>Mantención QB · <span>Control de equipos F/S</span></h1>
-    <div class="meta" id="meta"></div>
+    <div class="right">
+      <div class="meta" id="meta"></div>
+      <button id="btn-upd" title="Cargar la última información publicada">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        Actualizar
+      </button>
+    </div>
   </div>
   <nav>
     <button class="on" data-tab="fs">Fuera de servicio</button>
@@ -131,9 +143,19 @@
 </main>
 <footer id="foot"></footer>
 
-<script src="data.js"></script>
 <script>
+// Carga data.js sin caché para mostrar siempre lo último publicado
 (function(){
+  const sc=document.createElement("script");
+  sc.src="data.js?t="+Date.now();
+  sc.onload=()=>render();
+  sc.onerror=()=>{document.getElementById("meta").textContent="No se pudieron cargar los datos. Intenta actualizar.";};
+  document.head.appendChild(sc);
+  const b=document.getElementById("btn-upd");
+  b.onclick=()=>{b.disabled=true;b.classList.add("spin");b.lastChild.textContent=" Actualizando…";
+    const u=new URL(location.href);u.searchParams.set("t",Date.now());location.replace(u.toString());};
+})();
+function render(){
   const D = window.DATA || {equipos:[]};
   const NOW = new Date();
   const H = 3600e3;
@@ -246,7 +268,7 @@
     document.getElementById(id).innerHTML = data.map(([n,v])=>
       `<div class="bar"><div class="name" title="${esc(n)}">${esc(n)}</div><div class="track"><div class="fill" style="width:${v/m*100}%"></div></div><div class="v">${v}</div></div>`).join(""); }
   function set(id,v){ document.getElementById(id).textContent=v; }
-})();
+}
 </script>
 </body>
 </html>
