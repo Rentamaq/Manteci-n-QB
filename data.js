@@ -3,8 +3,8 @@
 // estado: "FS" = fuera de servicio vigente, "OP" = volvió a operativo.
 // Fechas en hora de Chile (-03:00).
 window.DATA = {
-  actualizado: "2026-11-14T12:08:00-03:00",
-  periodo: "Reportes desde 09/11/2026 00:00 hasta 14/11/2026 12:08",
+  actualizado: "2026-11-14T13:28:00-03:00",
+  periodo: "Reportes desde 09/11/2026 00:00 hasta 14/11/2026 13:28",
   equipos: [
     // ---------- FUERA DE SERVICIO VIGENTES ----------
     { equipo: "WCLL-77 (984)", tipo: "Camión tolva Scania", tolva: true, reportado_por: "Diego Inostroza (op. Luis Acuña)", grupo: "Mecánicos QB", horometro: "1291", area: "—", condicion: "Parachoques quebrado, enviado a taller", fecha_reporte: "2026-11-14T08:10:00-03:00", fecha_fs: "2026-11-14T08:42:00-03:00", estado: "OP", fecha_op: "2026-11-14T12:05:00-03:00", declarado_por: "René Luna", nota: "Confirmado operando en el listado de operación del 14/11" },
