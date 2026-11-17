@@ -301,6 +301,7 @@ function render(){
 function renderRevTec(){
   const R=window.REVTEC; const card=document.getElementById("rt-card");
   if(!R){ card.style.display="none"; return; }
+  card.style.display="";
   const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const day=iso=>{const [y,m,d]=iso.slice(0,10).split("-").map(Number);return new Date(y,m-1,d);};
   const fmtD=iso=>{const d=day(iso);return d.toLocaleDateString("es-CL",{day:"2-digit",month:"2-digit",year:"numeric"});};
