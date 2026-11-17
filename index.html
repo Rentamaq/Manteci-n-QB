@@ -327,10 +327,23 @@ function renderRevTec(){
   set("rt-prox",prox.length); set("rt-proxs",prox.filter(d=>d.tolva).length+" camiones tolva");
   set("rt-tot",docs.length); set("rt-tots","Según correo: "+R.informe.vencidos+" vencidos · "+R.informe.proximos+" próximos");
   const t=document.getElementById("t-rt"), f=document.getElementById("f-rt");
+  const cols=[
+    {k:"patente",l:"Patente",v:d=>d.patente},
+    {k:"codigo",l:"Código",v:d=>d.codigo},
+    {k:"tipo",l:"Tipo / descripción",v:d=>d.tipo+" "+d.descripcion},
+    {k:"propietario",l:"Propietario",v:d=>d.propietario},
+    {k:"vencimiento",l:"Vencimiento",v:d=>d.vencimiento},
+    {k:"dias",l:"Estado",v:d=>d.dias},
+    {k:"panel",l:"En panel F/S",v:d=>({FS:0,OP:1}[d.panel]??2)}
+  ];
+  let sk="vencimiento", sd=1;
   function draw(){
-    const v=f.value; const r=docs.filter(d=>!v||(v==="v"?d.vencido:v==="s"?(d.vencido||d.semana):d.tolva)).sort((a,b)=>a.dias-b.dias);
-    t.innerHTML="<thead><tr><th>Patente</th><th>Código</th><th>Tipo / descripción</th><th>Propietario</th><th>Vencimiento</th><th>Estado</th><th>En panel F/S</th></tr></thead><tbody>"+
+    const v=f.value; const c=cols.find(x=>x.k===sk);
+    const r=docs.filter(d=>!v||(v==="v"?d.vencido:v==="s"?(d.vencido||d.semana):d.tolva))
+      .sort((a,b)=>{const x=c.v(a),y=c.v(b); return (x>y?1:x<y?-1:0)*sd || a.dias-b.dias;});
+    t.innerHTML="<thead><tr>"+cols.map(x=>`<th data-k="${x.k}" title="Ordenar">${x.l}${x.k===sk?(sd>0?" ▲":" ▼"):""}</th>`).join("")+"</tr></thead><tbody>"+
       r.map(d=>`<tr class="${d.vencido?"crit":d.semana?"warn":""}"><td><span class="eq">${esc(d.patente)}</span></td><td>${esc(d.codigo)}</td><td>${esc(d.tipo)}<span class="note">${esc(d.descripcion)}</span></td><td>${esc(d.propietario)}</td><td class="num">${fmtD(d.vencimiento)}</td><td>${d.vencido?`<span class="badge b-crit">Vencido hace ${-d.dias} d</span>`:d.dias===0?`<span class="badge b-warn">Vence hoy</span>`:`<span class="badge ${d.semana?"b-warn":"b-ok"}">${d.dias} días</span>`}</td><td>${d.panel==="FS"?'<span class="badge b-crit">F/S</span>':d.panel==="OP"?'<span class="badge b-ok">Operativo</span>':"—"}</td></tr>`).join("")+"</tbody>";
+    t.querySelectorAll("th").forEach(th=>th.onclick=()=>{ if(sk===th.dataset.k) sd=-sd; else {sk=th.dataset.k; sd=1;} draw(); });
   }
   f.onchange=draw; draw();
 }
