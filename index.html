@@ -18,6 +18,10 @@
   h1{margin:0;font-size:22px;letter-spacing:.2px}
   h1 span{color:var(--accent)}
   .meta{font-size:12px;opacity:.8;text-align:right;line-height:1.5}
+  .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{background:#fff;border-radius:8px;padding:6px 10px;display:inline-flex;align-items:center;height:44px}
+  .logo img{height:100%;width:auto;display:block}
+  @media (max-width:600px){.logo{height:36px}}
   .auto{font-size:11px;color:#cfe0da;opacity:.85;margin-top:8px}
   .right{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
   #btn-upd{background:var(--accent);color:#1c2321;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
@@ -76,13 +80,17 @@
 <body>
 <header>
   <div class="top">
-    <h1>Mantención QB · <span>Control de equipos F/S</span></h1>
+    <div class="brand">
+      <span class="logo"><img src="img/logo-rentamaq.png" alt="RentaMaq"></span>
+      <h1>Mantención QB · <span>Control de equipos F/S</span></h1>
+    </div>
     <div class="right">
       <div class="meta" id="meta"></div>
       <button id="btn-upd" title="Cargar la última información publicada">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
         Actualizar
       </button>
+      <span class="logo"><img src="img/logo-teck.png" alt="Teck"></span>
     </div>
   </div>
   <div class="auto" id="auto">Revisión de WhatsApp (Mecánicos QB + Supervisores TMF) a pedido sobre las últimas 3 horas · el botón Actualizar carga lo último publicado</div>
