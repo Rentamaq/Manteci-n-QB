@@ -94,7 +94,6 @@
       <span class="logo"><img src="img/logo-teck.png" alt="Teck"></span>
     </div>
   </div>
-  <div class="auto" id="auto">Revisión de WhatsApp (Mecánicos QB + Supervisores TMF) a pedido sobre las últimas 3 horas · el botón Actualizar carga lo último publicado</div>
   <nav>
     <button class="on" data-tab="fs">Fuera de servicio</button>
     <button data-tab="op">Equipos operativos</button>
@@ -209,7 +208,7 @@ function render(){
   op.forEach(e=>{ e._h = hrs(e.fecha_fs, e.fecha_op); e._d = e._h/24; });
 
   document.getElementById("meta").innerHTML =
-    "Actualizado: "+fmt(D.actualizado)+"<br>"+esc(D.periodo||"")+"<br>Fuentes: Mecánicos QB · Supervisores TMF Rentamaq";
+    "Actualizado: "+fmt(D.actualizado)+"<br>"+esc(D.periodo||"");
   document.getElementById("foot").textContent =
     "Información documental tomada de los reportes de WhatsApp; los reportes repetidos en ambos grupos se cuentan una sola vez. Días F/S calculados a la hora actual de consulta.";
 
